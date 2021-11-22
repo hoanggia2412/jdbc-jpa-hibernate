@@ -16,7 +16,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 
+import org.hibernate.FetchMode;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
@@ -27,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQueries(value = {@NamedQuery(name = "query_all_courses",
 						query = "Select c from Course c"),
+					   @NamedQuery(name = "query_all_courses_join_fetch",
+						query = "Select c from Course c JOIN FETCH c.students"),
                        @NamedQuery(name = "query_get_100_steps_courses",
                        	query = "Select c from Course c where name like '%100 steps'")})
 @Cacheable
@@ -52,6 +56,7 @@ public class Course {
 	private Collection<Review> reviews = new ArrayList<>();
 	
 	@JsonIgnore
+	@Fetch(org.hibernate.annotations.FetchMode.SELECT)
 	@ManyToMany(mappedBy = "courses")
 	private Collection<Student> students = new ArrayList<>();
 	
