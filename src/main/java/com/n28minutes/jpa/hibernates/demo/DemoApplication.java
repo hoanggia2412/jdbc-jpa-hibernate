@@ -61,8 +61,8 @@ public class DemoApplication implements CommandLineRunner{
 //		employeeRepository.insertEmployee(new PartTimeEmployee("Malee", new BigDecimal(50)));
 //		employeeRepository.insertEmployee(new FullTimeEmployee("Misth", new BigDecimal(20000)));
 //		logger.info("list od employees -> {}",employeeRepository.retrieveAllEmployees());
-		repository.deleteById(10001L);
-		logger.info("List without deleted elements -> {}",repository.findAll());
+		
+		logger.info("List without deleted elements -> {}",repository.queryStringName());
 	}
 
 	

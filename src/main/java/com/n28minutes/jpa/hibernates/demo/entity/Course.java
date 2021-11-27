@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Cacheable;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
+import javax.persistence.SqlResultSetMapping;
 
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,7 +37,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						query = "Select c from Course c JOIN FETCH c.students"),
                        @NamedQuery(name = "query_get_100_steps_courses",
                        	query = "Select c from Course c where name like '%100 steps'")})
+@NamedNativeQuery(name = "query_name_for_courses",
+						query = "Select * from Course",resultSetMapping = "course-name")
 @Cacheable
+@SqlResultSetMapping(name = "course-name",
+					columns = {@ColumnResult(name="name",type = String.class)})
 @SQLDelete(sql="update course set is_deleted=true where id=?")
 @Where(clause = "is_deleted =false")
 public class Course {
@@ -103,6 +111,7 @@ public class Course {
 	public String toString() {
 		return "Course [id=" + id + ", name=" + name + "]";
 	}
+	
 	
 	
 }

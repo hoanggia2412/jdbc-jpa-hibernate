@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.n28minutes.jpa.hibernates.demo.entity.Course;
 
@@ -26,5 +25,8 @@ public interface CourseSpringDataRepository extends JpaRepository<Course, Long> 
 	
 	//NamedQuery By JPQL
 	@Query(name = "query_all_courses")
-	Collection<Course> queryAllCourseByNamedQuery();
+	Collection<?> queryAllCourseByNamedQuery();
+	
+	@Query(name= "query_name_for_courses")
+	Collection<?> queryStringName();
 }
