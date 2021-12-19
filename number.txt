@@ -8,3 +8,5 @@ Seven
 EIGHT
 NIGHT
 TEN
+eleven
+zero
